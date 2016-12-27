@@ -1,0 +1,6 @@
+{
+    "name": "dvdnwk/behat-example",
+    "description": "behat example",
+    "minimum-stability": "stable",
+    "license": "MIT"
+}
