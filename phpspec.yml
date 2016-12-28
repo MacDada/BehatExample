@@ -1,0 +1,4 @@
+suites:
+    behat_example_suite:
+        namespace: Dvdnwk\BehatExample
+        psr4_prefix: Dvdnwk\BehatExample
