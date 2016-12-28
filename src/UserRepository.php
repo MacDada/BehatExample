@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dvdnwk\BehatExample;
 
 class UserRepository
@@ -18,18 +20,14 @@ class UserRepository
     }
 
     /**
-     * @return array|User[]
+     * @return User[]
      */
-    public function findAll()
+    public function findAll(): array
     {
         return $this->users;
     }
 
-    /**
-     * @param string $name
-     * @return User|null
-     */
-    public function findByName($name)
+    public function findByName(string $name): ?User
     {
         foreach ($this->users as $user) {
             if ($user->getName() === $name) {

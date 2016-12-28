@@ -8,6 +8,9 @@
             "Dvdnwk\\BehatExample\\": "src/"
         }
     },
+    "require": {
+        "php": "^7.1"
+    },
     "require-dev": {
         "behat/behat": "^3.3",
         "phpspec/phpspec": "^3.2"
