@@ -22,4 +22,18 @@ class UserSpec extends ObjectBehavior
 
         $this->getName()->shouldReturn('John');
     }
+
+    public function it_is_not_admin_by_default()
+    {
+        $this->beConstructedWith('John');
+
+        $this->isAdmin()->shouldReturn(false);
+    }
+
+    function it_can_be_an_admin()
+    {
+        $this->beConstructedWith('John', true);
+
+        $this->isAdmin()->shouldReturn(true);
+    }
 }

@@ -60,7 +60,7 @@ class FeatureContext implements Context
      */
     public function iAmAnAdmin()
     {
-        throw new PendingException();
+        $this->user = new User('', true);
     }
 
     /**

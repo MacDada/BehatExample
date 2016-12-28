@@ -11,13 +11,24 @@ class User
      */
     private $name;
 
-    public function __construct(string $name)
+    /**
+     * @var bool
+     */
+    private $admin;
+
+    public function __construct(string $name, bool $admin = false)
     {
         $this->name = $name;
+        $this->admin = $admin;
     }
 
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->admin;
     }
 }
