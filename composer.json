@@ -3,6 +3,11 @@
     "description": "behat example",
     "minimum-stability": "stable",
     "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Dvdnwk\\BehatExample\\": "src/"
+        }
+    },
     "require-dev": {
         "behat/behat": "^3.3"
     }
