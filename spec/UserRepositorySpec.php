@@ -15,8 +15,10 @@ class UserRepositorySpec extends ObjectBehavior
         $this->shouldHaveType(UserRepository::class);
     }
 
-    function it_can_be_given_a_user(User $user)
+    function it_can_be_given_a_user()
     {
+        $user = new User('');
+
         $this->add($user);
     }
 
@@ -25,8 +27,11 @@ class UserRepositorySpec extends ObjectBehavior
         $this->findAll()->shouldReturn([]);
     }
 
-    function it_returns_added_users(User $user1, User $user2)
+    function it_returns_added_users()
     {
+        $user1 = new User('');
+        $user2 = new User('');
+
         $this->add($user1);
         $this->add($user2);
 
