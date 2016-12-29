@@ -77,4 +77,26 @@ class AuthorizationCheckerImplSpec extends ObjectBehavior
         $this->isGranted('foo')
             ->shouldReturn(false);
     }
+
+    public function it_allows_for_user_to_be_set()
+    {
+        $user = new User('');
+
+        $this->setUser($user);
+
+        $this->isGranted('user')
+            ->shouldReturn(true);
+    }
+
+    public function it_allows_for_user_to_be_removed()
+    {
+        $user = new User('');
+
+        $this->beConstructedWith($user);
+
+        $this->setUser(null);
+
+        $this->isGranted('user')
+            ->shouldReturn(false);
+    }
 }
