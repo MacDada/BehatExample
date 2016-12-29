@@ -16,6 +16,11 @@ class User
      */
     private $admin;
 
+    /**
+     * @var array|string[]
+     */
+    private $awards = [];
+
     public function __construct(string $name, bool $admin = false)
     {
         $this->name = $name;
@@ -30,5 +35,18 @@ class User
     public function isAdmin(): bool
     {
         return $this->admin;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAwards(): array
+    {
+        return $this->awards;
+    }
+
+    public function addAward(string $award): void
+    {
+        $this->awards[] = $award;
     }
 }

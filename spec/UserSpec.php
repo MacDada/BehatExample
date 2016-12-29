@@ -36,4 +36,21 @@ class UserSpec extends ObjectBehavior
 
         $this->isAdmin()->shouldReturn(true);
     }
+
+    function it_has_no_awards_by_default()
+    {
+        $this->beConstructedWith('John');
+
+        $this->getAwards()->shouldReturn([]);
+    }
+
+    function it_can_have_awards()
+    {
+        $this->beConstructedWith('John');
+
+        $this->addAward('foo');
+        $this->addAward('bar');
+
+        $this->getAwards()->shouldReturn(['foo', 'bar']);
+    }
 }
