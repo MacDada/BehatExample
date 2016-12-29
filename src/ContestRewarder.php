@@ -17,16 +17,25 @@ class ContestRewarder
     private $userAwardsAssigner;
 
     /**
+     * @var AuthorizationChecker
+     */
+    private $authorizationChecker;
+
+    /**
      * todo: it should be not an array but a repository
      *
      * @var array
      */
     private $usersPlaces = [];
 
-    public function __construct(UserRepository $userRepository, UserAwardsAssigner $userAwardsAssigner)
-    {
+    public function __construct(
+        UserRepository $userRepository,
+        UserAwardsAssigner $userAwardsAssigner,
+        AuthorizationChecker $authorizationChecker
+    ) {
         $this->userRepository = $userRepository;
         $this->userAwardsAssigner = $userAwardsAssigner;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     public function getUsersPlaces(): array
@@ -39,8 +48,15 @@ class ContestRewarder
         $this->usersPlaces[$userName] = $place;
     }
 
+    /**
+     * @throws NotAuthorizedException
+     */
     public function giveAwayPrizes(): void
     {
+        if (!$this->authorizationChecker->isGranted('admin')) {
+            throw new NotAuthorizedException();
+        }
+
         foreach ($this->usersPlaces as $userName => $place) {
             $user = $this->userRepository->findByName($userName);
 

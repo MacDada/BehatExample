@@ -11,16 +11,16 @@ Feature: giving awards
     Given I am an admin
     And there is user "Alice"
     When I assign user "Alice" place "1"
-    Then user "Alice" should be given "car"
+    Then user "Alice" should have award "car"
 
   Scenario: Admin can award user for the second place
     Given I am an admin
     And there is user "Bob"
     When I assign user "Bob" place "2"
-    Then user "Bob" should be given "tv"
+    Then user "Bob" should have award "tv"
 
   Scenario: No award for a third place
     Given I am an admin
     And there is user "Foo"
     When I assign user "Foo" place "3"
-    Then user "Foo" should not be given anything
+    Then user "Foo" should not have any awards

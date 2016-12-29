@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace spec\Dvdnwk\BehatExample;
 
+use Dvdnwk\BehatExample\AuthorizationChecker;
 use Dvdnwk\BehatExample\ContestRewarder;
+use Dvdnwk\BehatExample\NotAuthorizedException;
 use Dvdnwk\BehatExample\PlaceAsAwardAssigner;
 use Dvdnwk\BehatExample\User;
 use Dvdnwk\BehatExample\UserRepository;
@@ -14,9 +16,18 @@ use Webmozart\Assert\Assert;
 
 class ContestRewarderSpec extends ObjectBehavior
 {
-    function let(UserRepository $userRepository)
-    {
-        $this->beConstructedWith($userRepository, new PlaceAsAwardAssigner());
+    function let(
+        UserRepository $userRepository,
+        AuthorizationChecker $authorizationChecker
+    ) {
+        $authorizationChecker->isGranted('admin')
+            ->willReturn(false);
+
+        $this->beConstructedWith(
+            $userRepository,
+            new PlaceAsAwardAssigner(),
+            $authorizationChecker
+        );
     }
 
     function it_is_initializable()
@@ -40,8 +51,13 @@ class ContestRewarderSpec extends ObjectBehavior
         ]);
     }
 
-    function it_gives_away_prizes_to_users(UserRepository $userRepository)
-    {
+    function it_gives_away_prizes_to_users(
+        UserRepository $userRepository,
+        AuthorizationChecker $authorizationChecker
+    ) {
+        $authorizationChecker->isGranted('admin')
+            ->willReturn(true);
+
         $john = $this->mockUser($userRepository, 'John');
         $mark = $this->mockUser($userRepository, 'Mark');
 
@@ -52,6 +68,12 @@ class ContestRewarderSpec extends ObjectBehavior
 
         Assert::same(['1'], $john->getAwards());
         Assert::same(['2'], $mark->getAwards());
+    }
+
+    function it_requires_admin_to_give_away_prizes_to_users()
+    {
+        $this->shouldThrow(NotAuthorizedException::class)
+            ->during('giveAwayPrizes');
     }
 
     /**
